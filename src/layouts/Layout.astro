@@ -1,4 +1,7 @@
 ---
+import AsideImage from '../components/AsideImage.astro';
+import AsideInfo from '../components/AsideInfo.astro';
+import Main from '../components/Main.astro';
 interface Props {
 	title: string;
 }
@@ -12,29 +15,52 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Logo_de_la_Universidad_El_Bosque.svg/1200px-Logo_de_la_Universidad_El_Bosque.svg.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<div id="app" class="relative h-screen gap-2">
+			<aside class="[grid-area: asideImg] flex-col flex  bg-lime-100 rounded-lg overflow-y-auto" >
+				<AsideImage>
+			</aside>
+			<main class="[grid-area:main] bg-lime-100 rounded-lg overflow-y-auto">
+				<Main>
+			</main>
+			<aside class="[grid-area:asideInfo] flex-col flex  bg-lime-100 rounded-lg overflow-y-auto" >
+				<AsideInfo>
+			</aside>
+			<footer class="[grid-area:footer] bg-gray-900 min-h-[30px] text-zinc-100  text-center ">Ecopoblaciones Proyecto de Aula Maria Jose Beltran Gomez 2023</footer>
+		</div>
+	
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+<style>
+	#app{
+		display: grid;
+		grid-template-areas: 
+		"asideImg main asideInfo"
+		"footer footer footer";
+		grid-template-columns: 360px 1fr 360px;
+		grid-template-rows: 1fr auto;
 	}
+	@media  (max-width: 720px) {
+		#app{
+			display: flex;
+			flex-direction: column;
+		}
+		aside,main{
+			width: 100%;
+			overflow-y: auto;
+		}
+		
+	}
+</style>
+<style is:global>
+	
 	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
+		font-family: Bitstream, sans-serif;
+		background: #131a15;
 		background-size: 224px;
 	}
 	code {
@@ -47,5 +73,31 @@ const { title } = Astro.props;
 			Bitstream Vera Sans Mono,
 			Courier New,
 			monospace;
+	}
+
+	/* Estilo de la barra de desplazamiento */
+	::-webkit-scrollbar {
+	width: 5px;
+	}
+
+	/* Estilo de la pista de la barra de desplazamiento */
+	::-webkit-scrollbar-track {
+	background-color: #f1f1f1; /* Puedes ajustar el color de fondo según tus preferencias */
+	}
+
+	/* Estilo del pulgar (scroll thumb) de la barra de desplazamiento */
+	::-webkit-scrollbar-thumb {
+	background-color: #87c789; /* Puedes ajustar el color del pulgar según tus preferencias */
+	border-radius: 6px; /* Ajusta el radio de borde para hacerlo redondeado */
+	}
+
+	/* Estilo del pulgar cuando se está moviendo */
+	::-webkit-scrollbar-thumb:hover {
+	background-color: #45a049; /* Cambia el color al pasar el mouse sobre el pulgar */
+	}
+
+	/* Estilo del pulgar cuando está presionado */
+	::-webkit-scrollbar-thumb:active {
+	background-color: #39843f; /* Cambia el color cuando se hace clic en el pulgar */
 	}
 </style>

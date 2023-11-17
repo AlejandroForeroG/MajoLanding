@@ -1,0 +1,126 @@
+---
+import { Operation } from "./Operation";
+---
+<div class="m-4">
+    <div class="px-8 py-5">
+        <section class="bg-lime-50  shadow-lg rounded-lg p-8 mb-5">
+
+            <div class="flex justify-center ">
+                <img class=" w-52 h-auto mb-5" src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Logo_de_la_Universidad_El_Bosque.svg/1200px-Logo_de_la_Universidad_El_Bosque.svg.png" >
+            </div>
+            <h1 class="text-2xl font-bold text-center" style="color: #343a40;">
+                <span class="italic" style="color: #343a40;">Tecoma stans,L</span > automatización con matriz de Leslie
+            </h1>
+             <h2 class="text-lg text-center font-bold mt-5" style="color: rgb(46, 50, 53);">Realizado por Maria Jose Beltran Gomez</h2>
+        <h2 class="text-lg text-center font-bold" style="color: rgb(46, 50, 53);">Ecopoblaciones 2023</h2>
+    
+        <!-- Introducción -->
+        <section class="mt-5">
+            <h3 class="text-lg text-center font-bold" style="color: rgb(46, 50, 53);">Introducción</h3>
+            <p class="text-center mt-2" style="color: rgb(46, 50, 53);">
+                En esta simulación se evalúa el crecimiento de una población de
+                <span class="italic" style="color: #343a40;">Tecoma stans</span>
+                con una matriz de Leslie a través del tiempo. La simulación permite
+                asignar valores a cada estadio mediante un botón, los cuales se obtuvieron a partir levantamiento de datos botánicos en el barrio Cedritos, Bogotá, Cundinamarca.
+            </p>
+            <h4 class="text-md font-bold mb-3 text-gray-800">Ciclo de vida</h4>
+             <div class="mt-3 w-xs flex justify-center">
+                    <img class="shadow-lg  rounded-lg mb-5" src="https://media.discordapp.net/attachments/635830987011522560/1174437310415249498/image.png?ex=656796fa&is=655521fa&hm=b7de4d094c9e80594cc4fa222696af494a5871f0f9e37d24379cc480e1ab3dd3&=&width=749&height=415">
+                    </img>
+                </div>
+                <p class="text-sm text-center">"Beltran, 2023"</p>
+        <!-- Objetivos -->
+        </section >
+        <section class="mt-5">
+            <h3 class="text-lg text-center font-bold mb-3 text-gray-800">Objetivos</h3>
+            <section class="mt-5">
+                <h4 class="text-md font-bold mb-3 text-gray-800">Objetivo general</h4>
+                <p style="color: rgb(46, 50, 53);">Desarrollar un modelo matricial de Leslie aplicado a <span class="italic">Tecoma stans</span> en la región de Bogota, Cundinamarca barrio Cedritos, con el fin de comprender y prever las dinámicas poblacionales de esta especie a lo largo de su ciclo de vida.</p>
+            </section>
+            <section class="mt-5">
+                  <h4 class="text-md font-bold mb-3 text-gray-800">Objetivo Especifico</h4>
+                <ul class="list-disc list-inside text-gray-700 ml-4">
+                    <li class="mb-2">Describir el ciclo de vida de  <span class="italic">Tecoma stans</span> por medió de una simulacíon automatizada.</li>
+                    <li class="mb-2">Evaluar el crecimiento de la población mediante la matriz de Leslie.</li>
+                    <li class="mb-2">Analizar la influencia de los diferentes estadios en la dinámica poblacional.</li>
+                </ul>
+            </section>
+        </section>
+        </section>
+           <section class="bg-lime-50 shadow-lg rounded-lg p-5 mt-5">
+           <h3 class="text-lg text-center font-bold text-gray-800">Método</h3>
+           
+          
+                <h4 class="text-md font-bold mb-3 text-gray-800">Matriz de Leslie</h4>
+                <p class="mt-2 leading-relaxed text-gray-700">
+                La simulación permite observar el crecimiento de la población. Para entender el funcionamiento de la matriz de Leslie, primero debemos hallar las poblaciones y las tasas para cada estadio respectivamente. Para ello, se realizó un recorrido donde se obtuvieron los siguientes datos para cada estadio:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 ml-4">
+                    <li class="mb-2">Número de semillas: 20600</li>
+                    <li class="mb-2">Número de plántulas: 80</li>
+                    <li class="mb-2">Número de juveniles 1 sin flor: 55</li>
+                    <li class="mb-2">Número de juveniles 2 con flor: 45</li>
+                    <li class="mb-2">Número de adultos: 40</li>
+                </ul>
+                <p class="mt-2 leading-relaxed text-gray-700">
+                Luego, para hallar las tasas, primero debemos hacer un estimado por medio de la proporcion de semillas por adultos, lo cual nos da 571.
+                </p>
+                <p class="mt-2 leading-relaxed text-gray-700">
+                    Para el caso de las tasas de paso, lo que se hace es comparar primeramente la cantidad de individuos en el estadio S(0) con los  individuos en el estadio S(x), lo cual nos da una operación tipo, esto nos dara el porcetaje de supervivencia:
+                </p>
+                <p class="mt-3 text-center leading-relaxed text-gray-700">l(x)= S(x)/S(0) para cada estadio</p>
+                <p class="mt-2 leading-relaxed text-gray-700">
+                Luego, realizamos la misma comparación con los resultados obtenidos del estadio siguiente, con el estadio actual, para poder hallar la tasa de paso:
+                </p>
+                <p class="mt-3 text-center leading-relaxed text-gray-700">b(x) = l(x+1)/l(x)</p>
+                <p class="mt-3 text-center leading-relaxed text-gray-700">Por ultimo se acomodan las tasas respectivamente en la matriz y se realiza el proceso de multiplicación por la población inicial un numero determinado de veces como se muestra en la siguiente grafica</p>
+                  <div class="mt-3 w-xs flex justify-center">
+                    <img src="https://media.discordapp.net/attachments/635830987011522560/1175053324354068480/image.png?ex=6569d4af&is=65575faf&hm=a7cb772731af2a0583bab66b858d02cf915a97884eac4831cff470cbd1207c11&=&width=1000&height=355">
+                    </img>
+                </div>
+                
+                <h4 class="text-md font-bold mb-3 text-gray-800">Codigo</h4>
+                <p class="mt-3  leading-relaxed text-gray-700">Para el caso del codigo se utilizaron 3 lenguajes que cumpliran funciones especificas, estos son html, css, y Javascript el cual es parecido a python. Los dos primeros cumplen la función de estilizar la pagina, y el tercero de realizar, la parte funcional de este.
+                </p>
+                <p class="mt-3  leading-relaxed text-gray-700">El codigo recibe los valores de la matriz, el rango y el tiempo en la parte del funcionamiento, y realiza la operación principal la cual es la siguiente
+                </p>
+                <div class="mt-3 w-xs flex justify-center">
+                    <img src="https://media.discordapp.net/attachments/635830987011522560/1174420184761634876/image.png?ex=65678707&is=65551207&hm=fb62c8347cd6c282e8aa46ad7f725bfe235cb0a2007051fa7612f904acdb0cbe&=&width=703&height=415">
+                    </img>
+                </div>
+                   <div class="mt-3 w-xs flex justify-center">
+                    <img src="https://media.discordapp.net/attachments/635830987011522560/1175052626946183168/image.png?ex=6569d409&is=65575f09&hm=b40fb63e8cb71296a642fb400d7b9159f51735b1721c063e1722f4f483892270&=&width=1000&height=469">
+                    </img>
+                </div>
+                
+                
+       </section>
+        </section>
+    <!-- Metodología -->
+     
+       <section class="bg-lime-50 shadow-lg rounded-lg p-5">
+            <Operation client:load />
+       </section>
+        <section class="bg-lime-50 shadow-lg rounded-lg p-5 mt-5">
+             <h3 class="text-lg text-center font-bold " style="color: rgb(46, 50, 53);">Analisis y conclusiones</h3>
+            <p class=" mt-2 leading-relaxed" style="color: rgb(46, 50, 53);">
+                La simulación permite observar el crecimiento de la población de
+                <span class="italic" style="color: #343a40;">Tecoma stans</span> junto a los hallazgos y la literatura consultada se destaca
+                 la notable adaptabilidad de esta especie a variaciones de temperatura, revelando su capacidad para germinar de manera eficiente en condiciones 
+                térmicas variables, con una temperatura óptima de 25ºC. Aunque las bajas temperaturas afectan las actividades metabólicas 
+                y las altas temperaturas prolongadas pueden inducir desnaturalización de proteínas, la planta muestra una sorprendente 
+                flexibilidad en su rango de germinación. La presencia significativa de árboles adultos, atribuible a su siembra ornamental, 
+                sugiere que la proliferación de semillas podría no ser tan extensa. En conjunto, estos resultados subrayan la complejidad y 
+                la capacidad de respuesta específica de <span class="italic" style="color: #343a40;">Tecoma stans</span> ante condiciones ambientales cambiantes.</p>
+               
+       
+        <section class="bg-lime-50 shadow-lg rounded-lg p-5 mt-5">
+             <h3 class="text-lg text-center font-bold mb-3 " style="color: rgb(46, 50, 53);">Bibliografia</h3>
+                <ul class="list-disc list-inside text-gray-700 ml-4">
+                    <li class="mb-2 ">Netwoods. (2020). Calculadora Huella de Carbono. Www.reddearboles.org. https://www.reddearboles.org/Enciclopedia/nwcproduct/10813/arbol-nativo-chicala</li>
+                    <li class="mb-2">Fábio Socolowski, Cristine, D., & Takaki, M. (2008). Interaction of temperature and light on seed germination in Tecoma stans L. Juss. ex Kunth (Bignoniaceae). Brazilian Archives of Biology and Technology, 51(4), 523–530. https://doi.org/10.1590/s1516-89132008000400010</li>
+                     <li class="mb-2">Leslie, P. H. (1945). On the use of matrices in certain population mathematics. Biometrika, 33(3), 183-212.</li>
+                </ul>
+       </section>
+    </div>
+</div>

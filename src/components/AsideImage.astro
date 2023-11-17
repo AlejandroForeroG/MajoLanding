@@ -1,0 +1,18 @@
+---
+import ImageContainer from "./ImageContainer.astro";
+import imagesInfo from "../../data/images/imagesInfo.json";
+
+const arrImages = Object.values(imagesInfo);
+---
+
+<nav class="flex flex-col flex-1 gap-2 p-3 scroll-bar ">
+    <h5 class="text-xl font-bold text-center">Imagenes y recursos</h5>
+    <div class="bg-lime-100 rounded-lg p-2">
+        <ul>
+            {arrImages.map((imageInfo) => (
+                    <ImageContainer src={imageInfo.src}  title={imageInfo.title} description={imageInfo.description} />
+                  
+            ))}
+        </ul>
+    </div>
+</nav>
