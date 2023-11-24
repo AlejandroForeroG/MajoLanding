@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import {
+  calculoDensopoblacional,
+  multiplicar,
+  sumatoria,
+  calcularTasaFertilidad,
+  calcularTasaMortalidad,
+} from './functions';
+
 export function Operation() {
   const etapas = ["Semilla", "Plantula", "Juvenil 1", "Juvenil 2", "Adulto"];
-  const [ylim, setYlim] = useState(null);
+  const [ylim, setYlim] = useState(1000);
   const options = {
     scales: {
       y: {
@@ -17,31 +25,31 @@ export function Operation() {
       },
       title: {
         display: true,
-        text: "Predicciones de población Tacoma stans",
+        text: "Predicciones de población ",
       },
     },
   };
-
+  let poblacion = [];
   const DatosInvestigacion = {
     semilla: {
-      poblacioninicial: 20600,
-      tasamortalidad: 0.0038,
+      poblacion: 147,
+      tasamortalidad: 1.01,
     },
     plantula: {
-      poblacioninicial: 80,
-      tasamortalidad: 0.687,
+      poblacion: 149,
+      tasamortalidad: 0.2,
     },
     "juvenil 1": {
-      poblacioninicial: 55,
-      tasamortalidad: 0.81,
+      poblacion: 30,
+      tasamortalidad: 0.5,
     },
     "juvenil 2": {
-      poblacioninicial: 45,
-      tasamortalidad: 0.88,
+      poblacion: 15,
+      tasamortalidad: 0.4,
     },
     adulto: {
-      poblacioninicial: 40,
-      tasanatalidad: 515,
+      poblacion: 6,
+      tasanatalidad: 0.41,
       tasamortalidad: 0,
     },
   };
@@ -50,9 +58,9 @@ export function Operation() {
     etapas.reduce((acc, etapa) => {
       const etapaLowerCase = etapa.toLowerCase();
       acc[etapaLowerCase] = {
-        poblacioninicial:
-          acc[etapaLowerCase]?.poblacioninicial ||
-          DatosInvestigacion[etapaLowerCase]?.poblacioninicial ||
+        poblacion:
+          acc[etapaLowerCase]?.poblacion ||
+          DatosInvestigacion[etapaLowerCase]?.poblacion ||
           undefined,
         tasanatalidad:
           acc[etapaLowerCase]?.tasanatalidad ||
@@ -66,11 +74,6 @@ export function Operation() {
       return acc;
     }, {})
   );
-
-  const [data, setData] = useState(null);
-  const [resultado, setResultado] = useState(null);
-  const [recalcular, setRecalcular] = useState(false);
-
   const handleChange = (etapa, campo, valor) => {
     console.log(valores);
     setValores((prevValores) => ({
@@ -82,60 +85,80 @@ export function Operation() {
     }));
   };
 
+
+  for (let i = 0; i < etapas.length; i++) {
+    poblacion.push(parseInt(valores[etapas[i].toLowerCase()].poblacion));
+  }
+
+  const tasasFertilidad = calcularTasaFertilidad(
+    Object.values(valores).map((etapa) => etapa.poblacion)
+  );
+  const tasasMortalidad = calcularTasaMortalidad(poblacion);
+
+  etapas.forEach((etapa, index) => {
+    valores[etapa.toLowerCase()].tasanatalidad = tasasFertilidad[index];
+    valores[etapa.toLowerCase()].tasamortalidad = tasasMortalidad[index];
+  });
+
+  const [data, setData] = useState(null);
+  const [resultado, setResultado] = useState(null);
+  const [recalcular, setRecalcular] = useState(false);
+
   const calcularMatrizLeslie = () => {
-    let poblacioninicial = [];
+    //inicializacion --------------------------------------------------
+    let poblacion = [];
     const tiempo = [];
-    const iteracion = iteraciones; // Número de iteraciones
+    const iteracion = iteraciones;
 
     for (let i = 0; i < etapas.length; i++) {
-      poblacioninicial.push(
-        parseInt(valores[etapas[i].toLowerCase()].poblacioninicial)
-      );
+      poblacion.push(parseInt(valores[etapas[i].toLowerCase()].poblacion));
     }
-
     const graficas = [
-      [poblacioninicial[0]], // Semilla
-      [poblacioninicial[1]], // Plantula
-      [poblacioninicial[2]], // Juvenil 1
-      [poblacioninicial[3]], // Juvenil 2
-      [poblacioninicial[4]], // Adulto
+      [poblacion[0]], // Semilla
+      [poblacion[1]], // Plantula
+      [poblacion[2]], // Juvenil 1
+      [poblacion[3]], // Juvenil 2
+      [poblacion[4]], // Adulto
     ];
 
-    const matriz = [
+    let matriz = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ];
+    let fertilidadArray = [];
+    let pasoArray = [];
+
     for (let i = 0; i < etapas.length; i++) {
-      const natalidad = valores[etapas[i].toLowerCase()].tasanatalidad ?? 0;
-      matriz[0][i] = natalidad;
+      const fertilidad = valores[etapas[i].toLowerCase()].tasanatalidad ?? 0;
+      matriz[0][i] = fertilidad;
+      fertilidadArray.push(fertilidad);
     }
 
     for (let i = 0; i < etapas.length - 1; i++) {
-      const mortalidad = valores[etapas[i].toLowerCase()].tasamortalidad ?? 0;
-      matriz[i + 1][i] = mortalidad;
+      const paso = valores[etapas[i].toLowerCase()].tasamortalidad ?? 0;
+      matriz[i + 1][i] = paso;
     }
-
     matriz[4][4] = valores["adulto"].tasamortalidad ?? 0;
-    for (let k = 0; k < iteracion; k++) {
-      tiempo.push(k*10); // Añadir tiempo (iteración) a la gráfica
 
-      let nuevaPoblacion = [];
+    //operacion --------------------------------------------------------
+
+    for (let k = 0; k < iteracion; k++) {
+      tiempo.push(k * 10);
+
+      poblacion = multiplicar(poblacion.slice(), matriz);
       for (let i = 0; i < matriz.length; i++) {
-        let suma = 0;
-        for (let j = 0; j < matriz[i].length; j++) {
-          suma += matriz[i][j] * poblacioninicial[j];
-        }
-        nuevaPoblacion.push(suma);
-        graficas[i].push(suma); // Añadir a la gráfica correspondiente
+        matriz[0][i] =
+          fertilidadArray[i] * calculoDensopoblacional(sumatoria(poblacion));
       }
-      poblacioninicial = [...nuevaPoblacion];
+      for (let i = 0; i < poblacion.length; i++) {
+        graficas[i].push(poblacion[i]);
+      }
     }
 
-    console.log(graficas);
-    console.log(tiempo);
+    console.log(matriz);
 
     const datasets = [
       {
@@ -196,7 +219,9 @@ export function Operation() {
 
   return (
     <div className="container mx-auto">
-      <h3 class="text-lg text-center font-bold mb-3 text-gray-800">Resultados</h3>
+      <h3 className="text-lg text-center font-bold mb-3 text-gray-800">
+        Resultados
+      </h3>
       <p className="mb-4 text-center mt-4">
         Los siguientes datos son los datos obtenidos de la investigación, se
         pueden modificar, excepto las tasas de fertlidad de los 4 primeros
@@ -212,17 +237,15 @@ export function Operation() {
         <div className="bg-gradient-to-r from-blue-400 to-blue-300 p-4 rounded-md">
           <p className="text-sm font-bold mb-2">Valores</p>
           <div className="space-y-2">
-            {["Poblacion Inicial", "Tasa fertilidad", "Tasa Cambio"].map(
-              (campo) => (
-                <input
-                  key={campo}
-                  type="text"
-                  value={campo}
-                  className="w-full border rounded-md p-2 text-sm bg-blue-100"
-                  disabled="true"
-                />
-              )
-            )}
+            {["Poblacion Inicial", "Tasa Fertilidad", "Tasa Cambio"].map((campo) => (
+              <input
+                key={campo}
+                type="text"
+                value={campo}
+                className="w-full border rounded-md p-2 text-sm bg-blue-100"
+                disabled="true"
+              />
+            ))}
           </div>
         </div>
         {etapas.map((etapa) => (
@@ -232,18 +255,16 @@ export function Operation() {
           >
             <p className="text-sm font-bold mb-2">{etapa}</p>
             <div className="space-y-2">
-              {["PoblacionInicial", "TasaNatalidad", "TasaMortalidad"].map(
-                (campo) => (
-                  <input
-                    key={campo}
-                    type="number"
-                    value={valores[etapa.toLowerCase()][campo.toLowerCase()]}
-                    onChange={(e) => handleChange(etapa, campo, e.target.value)}
-                    className="w-full border rounded-md p-2 text-sm bg-lime-100"
-                    disabled={campo === "TasaNatalidad" && etapa !== "Adulto"}
-                  />
-                )
-              )}
+              {["poblacion", "TasaNatalidad", "TasaMortalidad"].map((campo) => (
+                <input
+                  key={campo}
+                  type="number"
+                  value={valores[etapa.toLowerCase()][campo.toLowerCase()]}
+                  onChange={(e) => handleChange(etapa, campo, e.target.value)}
+                  className="w-full border rounded-md p-2 text-sm bg-lime-100"
+                  disabled={campo === "TasaNatalidad" && etapa !== "Adulto"}
+                />
+              ))}
             </div>
           </div>
         ))}
@@ -260,7 +281,7 @@ export function Operation() {
 
       {resultado && (
         <div className="mt-4">
-          <div class="mt-5">
+          <div className="mt-5">
             <Line data={data} options={options} />
           </div>
           <div className="flex flex-col items-center space-y-2 w-full mt-5 mb-5">
@@ -283,8 +304,8 @@ export function Operation() {
               <input
                 type="range"
                 min="10"
-                max="100000"
-                step="100"
+                max="1000"
+                step="10"
                 value={ylim}
                 onChange={(e) => setYlim(e.target.value)}
                 className="flex-grow w-full bg-blue-400 rounded-md overflow-hidden appearance-none h-4"
@@ -303,7 +324,7 @@ export function Operation() {
                   <input
                     key={i}
                     type="number"
-                    value={valores[etapa.toLowerCase()].poblacioninicial}
+                    value={valores[etapa.toLowerCase()].poblacion}
                     className="w-full border-0 rounded-md p-2 text-sm bg-white shadow-inner"
                     disabled
                   />

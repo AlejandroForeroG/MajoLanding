@@ -1,22 +1,37 @@
 {
   "img1": {
-    "title": "Figura 1 T.stans flor",
+    "title": "Figura 1 Copaifera sp Adulto",
     "description": "Beltran 2023",
-    "src": "https://live.staticflickr.com/65535/52136503695_06b6a66846_k.jpg"
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177681485608783912/image.png?ex=6573645a&is=6560ef5a&hm=80ef4a5e58811d85e18f5cc6bdf6abef2ff970b63adea508f6729fcd8eaa58f1&=&format=webp&width=276&height=498"
   },
   "img2": {
-    "title": "Figura 2 T.stans semilla",
+    "title": "Figura 2 Copaifera sp Juvenil 2",
     "description": "Beltran 2023",
-    "src": "https://us.123rf.com/450wm/noppharat/noppharat1606/noppharat160600081/57856714-seeds-of-tecoma-stans-or-yellow-trumpetbush-flower.jpg"
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680862213574776/image.png?ex=657363c5&is=6560eec5&hm=700075fbaf202d12f1912caeefe3cb97f4bc8e23382c48b3e7159fd6653bf40d&=&format=webp&width=338&height=498"
   },
   "img3": {
-    "title": "T.stans arbol",
+    "title": "Figura 3 Copaifera sp Juvenil 1",
     "description": "Beltran 2023",
-    "src": "https://www.reddearboles.org/nwlib6/includes/phpthumb/phpThumb.php?src=/imagenes/chicala.JPG&w=550&f=JPG"
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680800775417907/image.png?ex=657363b7&is=6560eeb7&hm=61604a7c33b20e8773a9761d2f735da5ccbde71404dee50cc93ef630f3a3af3e&=&format=webp&width=392&height=498"
   },
   "img4": {
-    "title": "Ciclo de vida T.stans ",
+    "title": "Figura 4 Copaifera sp Semilla",
     "description": "Beltran 2023",
-    "src": "https://media.discordapp.net/attachments/635830987011522560/1174437310415249498/image.png?ex=656796fa&is=655521fa&hm=b7de4d094c9e80594cc4fa222696af494a5871f0f9e37d24379cc480e1ab3dd3&=&width=749&height=415"
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680741732208650/image.png?ex=657363a9&is=6560eea9&hm=17c9e6eaa6f9f22d26561e77fd2824269ef480db8e74f971e89ae3fbbc43e93c&=&format=webp&width=366&height=498"
+  },
+  "img5": {
+    "title": "Figura 5 Copaifera sp Semilla",
+    "description": "Beltran 2023",
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680675491561572/image.png?ex=65736399&is=6560ee99&hm=e13ffd4350f121ffa94155a0f189235e71321a2867c05e5ecfa7c32da1496146&=&format=webp&width=345&height=498"
+  },
+  "img6": {
+    "title": "Figura 6 Copaifera sp Semilla ",
+    "description": "Beltran 2023",
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680593924927559/image.png?ex=65736385&is=6560ee85&hm=441e8f29430a7c5376323ca20eb830f8a75a182eb05ea7183b5f35b800eecd75&=&format=webp&width=391&height=498"
+  },
+  "img7": {
+    "title": "Figura 7 Copaifera sp Semilla ",
+    "description": "Beltran 2023",
+    "src": "https://media.discordapp.net/attachments/232584061053304833/1177680499309822023/image.png?ex=6573636f&is=6560ee6f&hm=401133014ecde21aec32b750af473cc6f9921e54d8bf4d2689ac926b39ce8cbc&=&format=webp&width=360&height=497"
   }
 }
